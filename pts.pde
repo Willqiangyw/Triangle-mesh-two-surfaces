@@ -178,7 +178,6 @@ class pts // class for manipulaitng and displaying pointclouds or polyloops in 3
         }
       else {fill(red); arrow(B[f],G[f],20);} //
       }
-
         
 
 } // end of pts class

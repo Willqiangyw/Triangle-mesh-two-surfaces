@@ -31,6 +31,10 @@ float defectAngle=0;
 pts P = new pts(); // polyloop in 3D
 pts Q = new pts(); // second polyloop in 3D
 pts R, S; 
+beams ceilingBeam = new beams();
+beams floorBeam = new beams();
+beams intervalBeam = new beams();
+int tetCount;
     
 
 void setup() {
@@ -48,6 +52,7 @@ void setup() {
   }
 
 void draw() {
+  tetCount = 0;
   background(255);
   hint(ENABLE_DEPTH_TEST); 
   pushMatrix();   // to ensure that we can restore the standard view before writing on the canvas
@@ -72,19 +77,36 @@ void draw() {
     //fill(orange); beam(P.G[0],P.G[1],rt);
     //fill(green); beam(Q.G[0],Q.G[1],rt);
     triangle floor = new triangle();
-    floor.insertTriangle(P.G[0],P.G[1],P.G[2]);
+    //beams floorBeam = new beams();
+    findTriangles(P,floor);
     fill(orange);
-    floor.checkTriangle();
+    floor.checkTriangle(floorBeam);
+    floorBeam.drawBeams();
+    
+    triangle ceiling = new triangle();
+    //beams ceilingBeam = new beams();
+    findTriangles(Q,ceiling);
+    fill(green);
+    ceiling.checkTriangle(ceilingBeam);
+    ceilingBeam.drawBeams();
+    //findCircumCenter(P.G[0],P.G[1],P.G[2]);
     //System.out.println(R.nv);
+    //findBuldge (P.G[0],P.G[1],P.G[2], Q.G[0]);
+    fill(grey);
+   // beams intervalBeam = new beams();
+    findTwoByTwo(ceilingBeam, floorBeam,intervalBeam );
+    floor.findIntervalBeam(Q,intervalBeam);
+    ceiling.findIntervalBeam(P,intervalBeam);
+    intervalBeam.drawBeams();
     }
   
   popMatrix(); // done with 3D drawing. Restore front view for writing text on canvas
   hint(DISABLE_DEPTH_TEST); // no z-buffer test to ensure that help text is visible
 
   //*** TEAM: please fix these so that they provice the correct counts
-  scribeHeader("Site count: "+3+" floor + "+7+" ceiling",1);
-  scribeHeader("Beam count: "+3+" floor + "+7+" ceiling +"+6+" mixed",2);
-  scribeHeader("Tet count: "+20,3);
+  scribeHeader("Site count: "+P.nv+" floor + "+Q.nv+" ceiling",1);
+  scribeHeader("Beam count: "+ceilingBeam.index+" floor + "+floorBeam.index+" ceiling +"+intervalBeam.index+" mixed",2);
+  scribeHeader("Tet count: "+ tetCount ,3);
  
   // used for demos to show red circle when mouse/key is pressed and what key (disk may be hidden by the 3D model)
   if(mousePressed) {stroke(cyan); strokeWeight(3); noFill(); ellipse(mouseX,mouseY,20,20); strokeWeight(1);}
