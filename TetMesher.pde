@@ -106,7 +106,7 @@ void draw() {
 
   //*** TEAM: please fix these so that they provice the correct counts
   scribeHeader("Site count: "+P.nv+" floor + "+Q.nv+" ceiling",1);
-  scribeHeader("Beam count: "+ceilingBeam.index+" floor + "+floorBeam.index+" ceiling +"+intervalBeam.index+" mixed",2);
+  scribeHeader("Beam count: "+floorBeam.index+" floor + "+ceilingBeam.index+" ceiling +"+intervalBeam.index+" mixed",2);
   scribeHeader("Tet count: "+ tetCount ,3);
  
   // used for demos to show red circle when mouse/key is pressed and what key (disk may be hidden by the 3D model)
