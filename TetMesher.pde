@@ -53,6 +53,7 @@ void setup() {
 
 void draw() {
   tetCount = 0;
+  ceilingBeam.clear();floorBeam.clear();intervalBeam.clear();
   background(255);
   hint(ENABLE_DEPTH_TEST); 
   pushMatrix();   // to ensure that we can restore the standard view before writing on the canvas

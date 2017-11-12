@@ -2,6 +2,7 @@ class beams{
  int index = 0;
  pt[][] points = new pt[16000][2];
  beams(){}
+ void clear() {index = 0;}
  void insertBeam(pt A, pt B){
    //println(contains(A,B));
    if(contains(A,B)){
