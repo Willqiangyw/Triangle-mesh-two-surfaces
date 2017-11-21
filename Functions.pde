@@ -26,10 +26,14 @@ pt findCircumCenter(pt A, pt B, pt C){
   pt midPtAB = P(A, B);
   pt midPtAC = P(A, C);
   
-  vec BA = V(B, A);
+ // vec BA = V(B, A);
+  vec AB = V(A, B);
+  vec AC = V(A, C);
   vec A_midPtAB  = V(A, midPtAB);
   vec A_midPtAC  = V(A, midPtAC);
-  vec orthognalAB = R(BA);
+  pt projection = P(A,dot(AC,U(AB)),U(AB));
+  vec orthognalAB = U(V(projection, C));
+ // vec orthognalAB = R(AB,90,U(V(A,B)),U(V(A,C)));
   float s = 0.0;
   s =  (dot(A_midPtAC, A_midPtAC) - dot(A_midPtAB ,A_midPtAC)) / (dot(orthognalAB ,A_midPtAC));
   circumCenter =midPtAB. add(orthognalAB. mul(s));
@@ -159,4 +163,67 @@ pt findCenter (pt A, pt B, pt C, pt D, boolean show) {
  // beam(centerOfTriangle,P(centerOfTriangle,test),rt);
  if(show)show(centerOfSphere,radiusOfSphere);
  return centerOfSphere;
+}
+
+pt findCenter3Points(pt A, pt B, pt C, float r,boolean show)
+{
+  
+  pt centerOfSphere;
+  pt centerOfTriangle = findCircumCenter(A, B, C);
+  //println(d(centerOfTriangle,A));
+  vec normalOfTraignle;
+  normalOfTraignle = U(cross(V(A,C), V(A,B)));
+  
+  float v = sqrt(pow(r,2) - pow(d(centerOfTriangle,A),2));
+  centerOfSphere = P(centerOfTriangle, v, normalOfTraignle);
+  beam(centerOfTriangle, centerOfSphere,rt ); 
+  if(show)show(centerOfSphere,r);
+  return centerOfSphere;
+}
+
+void findCandidateTriangle(pt A, pt B, pt Center, float r,boolean show)
+{
+  float maxAngle = 2*PI;
+  pt midAB = P(A,B);
+  pt centerResult = null;
+  for(int i=0; i<P.nv; i++)
+  {
+
+    pt centerOfTriangle = findCircumCenter(P.G[i], A, B);
+    noStroke();
+    //fill(red);show(A,40);
+    //fill(blue);show(B,40);
+    //fill(yellow);show(P.G[i],40);
+    //fill(green);show(centerOfTriangle,20);
+    //    fill(blue,30);
+    float radiusOfTriangle = d(centerOfTriangle,A);
+      //println(radiusOfTriangle);
+    if (radiusOfTriangle>r) continue;
+    vec normalOfTraignle = U(cross(V(A,B), V(A,P.G[i])));
+    float v = sqrt(pow(r,2) - pow(d(centerOfTriangle,A),2));
+    pt centerOfSphere = P(centerOfTriangle, v, normalOfTraignle);
+    //show(centerOfTriangle,20);
+    //beam(centerOfTriangle, centerOfSphere,rt ); 
+    ////if(show)show(centerOfSphere,r);
+    //fill(black);beam(midAB, centerOfSphere,rt);
+    //return centerOfSphere;
+   //lenSq1 = x1*x1 + x2*x2 + 
+    //angle = acos(dot/sqrt(lenSq1 * lenSq2));
+    
+   // println(i+" angle "+atan2(norm(cross(V(midAB,Center),V(midAB,centerOfSphere))), dot(V(midAB,Center),V(midAB,centerOfSphere)))/2/PI*360);
+   //println(i+" angle "+acos(dot(V(midAB,Center),V(midAB,centerOfSphere))/(n(V(midAB,Center))*n(V(midAB,centerOfSphere))))/2/PI*360);
+   //println(i+" test "+dot(U(V(A,B)),U(cross(V(midAB,Center),V(midAB,centerOfSphere)))));
+   float angle = acos(dot(V(midAB,Center),V(midAB,centerOfSphere))/(n(V(midAB,Center))*n(V(midAB,centerOfSphere))));
+   if(dot(U(V(A,B)),U(cross(V(midAB,Center),V(midAB,centerOfSphere))))>=0)
+     angle = -angle + 2*PI;
+   println(i+" angle "+ angle);
+   if(angle < maxAngle)
+   {
+     maxAngle = angle; 
+     centerResult = centerOfSphere;
+   }
+   
+  }
+  fill(blue,30);
+  if(show && centerResult!=null)show(centerResult,r);
 }

@@ -80,25 +80,26 @@ void draw() {
     triangle floor = new triangle();
     //beams floorBeam = new beams();
     findTriangles(P,floor);
-    fill(orange);
+    fill(orange,40);
     floor.checkTriangle(floorBeam);
     floorBeam.drawBeams();
-    
+    //floorBeam.sampleBeam();
     triangle ceiling = new triangle();
-    //beams ceilingBeam = new beams();
     findTriangles(Q,ceiling);
-    fill(green);
+    fill(green,40);
     ceiling.checkTriangle(ceilingBeam);
     ceilingBeam.drawBeams();
-    //findCircumCenter(P.G[0],P.G[1],P.G[2]);
-    //System.out.println(R.nv);
-    //findBuldge (P.G[0],P.G[1],P.G[2], Q.G[0]);
-    fill(grey);
-   // beams intervalBeam = new beams();
+    //ceilingBeam.sampleBeam();
+    fill(cyan,40);
     findTwoByTwo(ceilingBeam, floorBeam,intervalBeam );
     floor.findIntervalBeam(Q,intervalBeam);
     ceiling.findIntervalBeam(P,intervalBeam);
     intervalBeam.drawBeams();
+    intervalBeam.sampleBeam();
+    ///////////////////
+    //noFill();stroke(blue);
+    //pt center = findCenter3Points(Q.G[0],Q.G[1],Q.G[2],700,true);
+    //findCandidateTriangle(Q.G[0],Q.G[1],center,700,true);
     }
   
   popMatrix(); // done with 3D drawing. Restore front view for writing text on canvas
