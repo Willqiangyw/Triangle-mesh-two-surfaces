@@ -1,10 +1,11 @@
 
 class pts // class for manipulaitng and displaying pointclouds or polyloops in 3D 
   { 
-    int maxnv = 16000;                 //  max number of vertices
+    int maxnv = 50000;                 //  max number of vertices
     pt[] G = new pt [maxnv];           // geometry table (vertices)
     char[] L = new char [maxnv];             // labels of points
     vec [] LL = new vec[ maxnv];  // displacement vectors
+    boolean[] seen = new boolean [maxnv];//seen boolean for all vertices
     Boolean loop=true;          // used to indicate closed loop 3D control polygons
     int pv =0,     // picked vertex index,
         iv=0,      //  insertion vertex index
@@ -17,6 +18,7 @@ class pts // class for manipulaitng and displaying pointclouds or polyloops in 3
     {
     for (int i=0; i<maxnv; i++) G[i]=P(); 
     for (int i=0; i<maxnv; i++) LL[i]=V(); 
+    for (int i=0; i<maxnv; i++) seen[i]=false; 
     return this;
     }     // init all point objects
   pts empty() {nv=0; pv=0; return this;}                                 // resets P so that we can start adding points

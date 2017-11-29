@@ -23,6 +23,15 @@ void keyPressed()
   if(key=='a') {animating=!animating; }// toggle animation
   if(key=='|') {P.setZ(h_floor); Q.setZ(h_ceiling);} // project all sites on their respective plane
   if(key=='#') exit();
+  if(key=='b') {pivot=!pivot;}
+  if(key=='x') {x++;}
+  if(key=='X') {x--;}
+  if(key=='c') {x+=10;}
+  if(key=='C') {x-=10;}
+  if(key=='v') {x+=100;}
+  if(key=='V') {x-=100;}
+  if(key=='z') {x+=1000;}
+  if(key=='Z') {x-=1000;}
   change=true;   // to save a frame for the movie when user pressed a key 
   }
 
@@ -87,4 +96,4 @@ void displayFooter()  // Displays help text at the bottom
 
 String title ="Lattice Maker", name ="TEAM NAMES",
        menu="?:help, t/T:move view, space:rotate view, `/wheel:zoom, !:picture, ~:(start/stop) filming,  #:quit",
-       guide="click&drag:pick&slide, f:flip ceiling/floor, x/X:move picked/all, p/P:perturb, X:slide All, |:snap heights, l/L:load, w/W:write"; // user's guide
+       guide="click&drag:pick&slide, f:flip ceiling/floor, .:flip show Points, b: flip show triangle mesh, \\: flip show tubes"; // user's guide
